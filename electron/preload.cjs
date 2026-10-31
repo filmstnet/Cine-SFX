@@ -16,6 +16,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
   checkForUpdates: (repo) => ipcRenderer.invoke('app:check-for-updates', repo),
   openExternal: (url) => ipcRenderer.invoke('shell:open-external', url),
   getAppVersion: () => ipcRenderer.invoke('app:get-version'),
+  platform: process.platform,
+  isWindows: process.platform === 'win32',
+  isMac: process.platform === 'darwin',
   onUpdateAvailable: (callback) => {
     const sub = (event, data) => callback(data);
     ipcRenderer.on('update:available', sub);

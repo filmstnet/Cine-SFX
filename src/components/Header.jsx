@@ -74,15 +74,23 @@ export default function Header({
     }
   };
 
+  const isWin = window.electronAPI
+    ? !!window.electronAPI.isWindows
+    : typeof navigator !== 'undefined' && navigator.userAgent.toLowerCase().includes('windows');
+
   return (
     <>
       <header
-        className="h-12 bg-[#161617]/80 backdrop-blur-2xl border-b border-white/10 flex items-center justify-between pr-4 select-none shrink-0 z-30"
-        style={{ WebkitAppRegion: 'drag', paddingLeft: '84px' }}
+        className="h-12 bg-[#161617]/80 backdrop-blur-2xl border-b border-white/10 flex items-center justify-between select-none shrink-0 z-30 transition-all duration-150"
+        style={{
+          WebkitAppRegion: 'drag',
+          paddingLeft: isWin ? '16px' : '84px',
+          paddingRight: isWin ? '140px' : '16px'
+        }}
       >
         {/* Brand & macOS traffic lights spacing */}
         <div className="flex items-center gap-2.5 relative" style={{ WebkitAppRegion: 'no-drag' }}>
-          {!window.electronAPI && (
+          {!window.electronAPI && !isWin && (
             <div className="absolute -left-[68px] flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-[#ff5f57] border border-[#e0443e]/50"></div>
               <div className="w-3 h-3 rounded-full bg-[#febc2e] border border-[#d89e24]/50"></div>

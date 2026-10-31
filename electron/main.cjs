@@ -46,7 +46,10 @@ function createWindow() {
     }
   }
 
-  mainWindow = new BrowserWindow({
+  const isMac = process.platform === 'darwin';
+  const isWin = process.platform === 'win32';
+
+  const windowOptions = {
     title: 'FilmSt - Sfx',
     icon: iconPath || undefined,
     width: 1200,
@@ -54,15 +57,27 @@ function createWindow() {
     minWidth: 420,
     minHeight: 480,
     backgroundColor: '#000000',
-    titleBarStyle: 'hiddenInset',
-    trafficLightPosition: { x: 14, y: 14 },
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
       contextIsolation: true,
       nodeIntegration: false,
       webSecurity: false // allow local audio playback seamlessly
     }
-  });
+  };
+
+  if (isMac) {
+    windowOptions.titleBarStyle = 'hiddenInset';
+    windowOptions.trafficLightPosition = { x: 14, y: 14 };
+  } else if (isWin) {
+    windowOptions.titleBarStyle = 'hidden';
+    windowOptions.titleBarOverlay = {
+      color: '#161617',
+      symbolColor: '#f5f5f7',
+      height: 48
+    };
+  }
+
+  mainWindow = new BrowserWindow(windowOptions);
 
   if (isDev) {
     const devUrl = 'http://localhost:3000';
@@ -199,9 +214,17 @@ ipcMain.on('drag:start', (event, filePath) => {
       return;
     }
 
+    const unpackedIcon = path.join(__dirname.replace('app.asar', 'app.asar.unpacked'), 'drag-icon.png');
     const iconPath = path.join(__dirname, 'drag-icon.png');
     const fallbackIcon = path.join(__dirname, '../public/icon.png');
-    const finalIcon = fs.existsSync(iconPath) ? iconPath : fallbackIcon;
+    let finalIcon = iconPath;
+    if (fs.existsSync(unpackedIcon)) {
+      finalIcon = unpackedIcon;
+    } else if (fs.existsSync(iconPath)) {
+      finalIcon = iconPath;
+    } else if (fs.existsSync(fallbackIcon)) {
+      finalIcon = fallbackIcon;
+    }
 
     event.sender.startDrag({
       file: absPath,

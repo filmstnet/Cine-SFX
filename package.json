@@ -47,6 +47,9 @@
       "package.json"
     ],
     "asar": true,
+    "asarUnpack": [
+      "**/drag-icon.png"
+    ],
     "mac": {
       "icon": "build/icon.icns",
       "target": [
