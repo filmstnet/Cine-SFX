@@ -22,10 +22,23 @@ protocol.registerSchemesAsPrivileged([
   }
 ]);
 
+function getAppIconPath() {
+  const candidates = [
+    path.join(__dirname, '../public/icon.png'),
+    path.join(__dirname, '../dist/icon.png'),
+    path.join(__dirname, '../build/icon.png'),
+    path.join(__dirname, 'drag-icon.png')
+  ];
+  for (const p of candidates) {
+    if (fs.existsSync(p)) return p;
+  }
+  return '';
+}
+
 function createWindow() {
-  const iconPath = path.join(__dirname, '../public/icon.png');
+  const iconPath = getAppIconPath();
   
-  if (process.platform === 'darwin' && app.dock && fs.existsSync(iconPath)) {
+  if (process.platform === 'darwin' && app.dock && iconPath) {
     try {
       app.dock.setIcon(iconPath);
     } catch (e) {
@@ -35,7 +48,7 @@ function createWindow() {
 
   mainWindow = new BrowserWindow({
     title: 'FilmSt - Sfx',
-    icon: iconPath,
+    icon: iconPath || undefined,
     width: 1140,
     height: 740,
     minWidth: 420,

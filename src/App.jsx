@@ -232,6 +232,42 @@ export default function App() {
     }
   }, []);
 
+  // Filtered sounds calculation
+  const filteredSounds = useMemo(() => {
+    return sounds.filter((item) => {
+      // Category filter
+      if (!onlyFavorites && activeCategory !== 'all' && item.category !== activeCategory) {
+        return false;
+      }
+      // Favorites filter
+      if (onlyFavorites && !favorites.has(item.id)) {
+        return false;
+      }
+      // Duration filter
+      if (durationFilter === 'short' && (item.duration || 0) > 2.0) return false;
+      if (durationFilter === 'medium' && ((item.duration || 0) <= 2.0 || (item.duration || 0) > 5.0)) return false;
+      if (durationFilter === 'long' && (item.duration || 0) <= 5.0) return false;
+      // Search query
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        const matchName = item.name.toLowerCase().includes(q);
+        const matchCat = (item.catName || '').toLowerCase().includes(q);
+        if (!matchName && !matchCat) return false;
+      }
+      return true;
+    });
+  }, [sounds, activeCategory, durationFilter, searchQuery, onlyFavorites, favorites]);
+
+  // Compute category counts
+  const categoryCounts = useMemo(() => {
+    const counts = { all: sounds.length };
+    sounds.forEach((s) => {
+      const c = s.category || 'other';
+      counts[c] = (counts[c] || 0) + 1;
+    });
+    return counts;
+  }, [sounds]);
+
   // Request permanent file deletion
   const onRequestDelete = useCallback((sound) => {
     if (!sound) return;
@@ -311,42 +347,6 @@ export default function App() {
       setIsDeleting(false);
     }
   }, [soundToDelete, activeSound, filteredSounds, libraryPath, stopPlayback, favorites]);
-
-  // Filtered sounds calculation
-  const filteredSounds = useMemo(() => {
-    return sounds.filter((item) => {
-      // Category filter
-      if (!onlyFavorites && activeCategory !== 'all' && item.category !== activeCategory) {
-        return false;
-      }
-      // Favorites filter
-      if (onlyFavorites && !favorites.has(item.id)) {
-        return false;
-      }
-      // Duration filter
-      if (durationFilter === 'short' && (item.duration || 0) > 2.0) return false;
-      if (durationFilter === 'medium' && ((item.duration || 0) <= 2.0 || (item.duration || 0) > 5.0)) return false;
-      if (durationFilter === 'long' && (item.duration || 0) <= 5.0) return false;
-      // Search query
-      if (searchQuery) {
-        const q = searchQuery.toLowerCase();
-        const matchName = item.name.toLowerCase().includes(q);
-        const matchCat = (item.catName || '').toLowerCase().includes(q);
-        if (!matchName && !matchCat) return false;
-      }
-      return true;
-    });
-  }, [sounds, activeCategory, durationFilter, searchQuery, onlyFavorites, favorites]);
-
-  // Compute category counts
-  const categoryCounts = useMemo(() => {
-    const counts = { all: sounds.length };
-    sounds.forEach((s) => {
-      const c = s.category || 'other';
-      counts[c] = (counts[c] || 0) + 1;
-    });
-    return counts;
-  }, [sounds]);
 
   // Global Keyboard shortcuts
   useEffect(() => {

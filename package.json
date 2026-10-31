@@ -39,6 +39,7 @@
     },
     "files": [
       "dist/**/*",
+      "public/**/*",
       "electron/**/*",
       "demo-sfx/**/*",
       "package.json"
