@@ -168,8 +168,12 @@ ipcMain.handle('cache:get-library', async () => {
     if (fs.existsSync(CACHE_FILE)) {
       const data = fs.readFileSync(CACHE_FILE, 'utf8');
       const parsed = JSON.parse(data);
-      if (parsed && parsed.sounds && parsed.sounds.length > 0) {
-        return parsed;
+      if (parsed && Array.isArray(parsed.sounds) && parsed.sounds.length > 0) {
+        // Automatically filter out any macOS AppleDouble (._*) or hidden files from cache
+        parsed.sounds = parsed.sounds.filter(s => s && s.name && !s.name.startsWith('.'));
+        if (parsed.sounds.length > 0) {
+          return parsed;
+        }
       }
     }
   } catch (e) {
@@ -195,6 +199,9 @@ ipcMain.handle('cache:get-library', async () => {
 
 ipcMain.handle('cache:save-library', async (event, data) => {
   try {
+    if (data && Array.isArray(data.sounds)) {
+      data.sounds = data.sounds.filter(s => s && s.name && !s.name.startsWith('.'));
+    }
     fs.mkdirSync(path.dirname(CACHE_FILE), { recursive: true });
     fs.writeFileSync(CACHE_FILE, JSON.stringify(data), 'utf8');
     return true;

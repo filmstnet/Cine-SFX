@@ -177,11 +177,16 @@ function scanDirectory(dirPath, maxFiles = 5000) {
       const fullPath = path.join(currentDir, entry.name);
 
       if (entry.isDirectory()) {
-        // Skip hidden folders and node_modules
-        if (!entry.name.startsWith('.') && entry.name !== 'node_modules') {
+        // Skip hidden folders (e.g. .git, .Trash), node_modules, and OS system volumes
+        if (!entry.name.startsWith('.') && entry.name !== 'node_modules' && entry.name !== '$RECYCLE.BIN' && entry.name !== 'System Volume Information') {
           traverse(fullPath);
         }
       } else if (entry.isFile()) {
+        // Skip hidden files, system files, and macOS AppleDouble resource fork metadata files (._*.wav, .DS_Store, etc.)
+        if (entry.name.startsWith('.')) {
+          continue;
+        }
+
         const ext = path.extname(entry.name).toLowerCase();
         if (AUDIO_EXTENSIONS.has(ext)) {
           try {

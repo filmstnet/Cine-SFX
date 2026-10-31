@@ -76,9 +76,12 @@ export default function App() {
     if (window.electronAPI) {
       window.electronAPI.getCachedLibrary().then((cached) => {
         if (cached && cached.sounds && cached.sounds.length > 0) {
-          setSounds(cached.sounds);
-          setLibraryPath(cached.libraryPath || '');
-          setActiveSound(cached.sounds[0]);
+          const cleanSounds = cached.sounds.filter((s) => s && s.name && !s.name.startsWith('.'));
+          if (cleanSounds.length > 0) {
+            setSounds(cleanSounds);
+            setLibraryPath(cached.libraryPath || '');
+            setActiveSound(cleanSounds[0]);
+          }
         }
       });
       window.electronAPI.getAlwaysOnTop().then(setIsPinned);
@@ -131,13 +134,14 @@ export default function App() {
     setIsScanning(true);
     try {
       const results = await window.electronAPI.scanFolder(folderPath);
-      if (results && results.length > 0) {
-        setSounds(results);
-        setActiveSound(results[0]);
+      const cleanResults = (results || []).filter((s) => s && s.name && !s.name.startsWith('.'));
+      if (cleanResults.length > 0) {
+        setSounds(cleanResults);
+        setActiveSound(cleanResults[0]);
         // save to cache
         await window.electronAPI.saveLibraryCache({
           libraryPath: folderPath,
-          sounds: results,
+          sounds: cleanResults,
           timestamp: Date.now()
         });
       }
@@ -154,7 +158,9 @@ export default function App() {
     if (files.length === 0) return;
     setIsScanning(true);
     const audioExts = ['.wav', '.mp3', '.aif', '.aiff', '.flac', '.ogg', '.m4a'];
-    const validFiles = files.filter(f => audioExts.some(ext => f.name.toLowerCase().endsWith(ext)));
+    const validFiles = files.filter(
+      (f) => !f.name.startsWith('.') && audioExts.some((ext) => f.name.toLowerCase().endsWith(ext))
+    );
 
     const parsed = validFiles.map((f, idx) => {
       const ext = f.name.slice(f.name.lastIndexOf('.')).toLowerCase();
