@@ -13,7 +13,9 @@
     "preview": "vite preview",
     "electron": "electron .",
     "pack:mac": "vite build && electron-builder --mac --dir",
-    "dist:mac": "vite build && electron-builder --mac"
+    "dist:mac": "vite build && electron-builder --mac",
+    "pack:win": "vite build && electron-builder --win --x64 --dir",
+    "dist:win": "vite build && electron-builder --win --x64"
   },
   "dependencies": {
     "lucide-react": "^0.475.0",
@@ -59,6 +61,30 @@
       "darkModeSupport": true,
       "hardenedRuntime": false,
       "gatekeeperAssess": false
+    },
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "FilmSt - Sfx"
     }
   }
 }

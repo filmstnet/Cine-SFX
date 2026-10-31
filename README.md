@@ -70,6 +70,23 @@ npm run dist:mac
 
 ---
 
+### 🪟 Đóng gói Desktop App (Windows 10 / 11)
+
+1. **Đóng gói file Cài đặt (`Setup.exe`) và Chạy ngay (`Portable.exe`):**
+```bash
+npm run dist:win
+# File cài đặt NSIS: release/FilmSt - Sfx Setup 1.0.0.exe
+# File Portable chạy ngay không cần cài đặt: release/FilmSt - Sfx 1.0.0.exe
+```
+
+2. **Đóng gói thư mục chạy thử nhanh (Windows Unpacked):**
+```bash
+npm run pack:win
+# File chạy trực tiếp: release/win-unpacked/FilmSt - Sfx.exe
+```
+
+---
+
 ### 🌐 Cách đẩy lên GitHub & Tạo bản cập nhật (Releases)
 
 1. **Khởi tạo và đẩy mã nguồn lên GitHub:**
