@@ -1,7 +1,7 @@
 {
   "name": "filmst-sfx",
   "productName": "FilmSt - Sfx",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Desktop SFX Library & Instant Drag-and-Drop for Video Editors (FilmSt - Sfx)",
   "main": "electron/main.cjs",
   "type": "module",

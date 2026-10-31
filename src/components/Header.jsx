@@ -35,10 +35,10 @@ export default function Header({
         const res = await window.electronAPI.checkForUpdates();
         setUpdateInfo(res);
       } else {
-        setUpdateInfo({ hasUpdate: false, currentVersion: '1.0.0', message: 'Môi trường Web Preview' });
+        setUpdateInfo({ hasUpdate: false, currentVersion: '1.0.1', message: 'Môi trường Web Preview' });
       }
     } catch (err) {
-      setUpdateInfo({ hasUpdate: false, currentVersion: '1.0.0', error: err.message });
+      setUpdateInfo({ hasUpdate: false, currentVersion: '1.0.1', error: err.message });
     } finally {
       setIsCheckingUpdate(false);
     }
@@ -242,7 +242,7 @@ export default function Header({
                 </div>
                 <div>
                   <h3 className="font-semibold text-sm">Cập nhật FilmSt - Sfx</h3>
-                  <p className="text-[11px] text-[#86868b]">Phiên bản hiện tại: v{updateInfo?.currentVersion || '1.0.0'}</p>
+                  <p className="text-[11px] text-[#86868b]">Phiên bản hiện tại: v{updateInfo?.currentVersion || '1.0.1'}</p>
                 </div>
               </div>
               <button
@@ -291,7 +291,7 @@ export default function Header({
                 <CheckCircle2 className="w-8 h-8 text-emerald-400 mb-1" />
                 <p className="font-medium text-xs text-[#f5f5f7]">Bạn đang sử dụng phiên bản mới nhất</p>
                 <p className="text-[11px] text-[#86868b]">
-                  {updateInfo?.message || `Phiên bản v${updateInfo?.currentVersion || '1.0.0'} hiện là phiên bản cập nhật nhất.`}
+                  {updateInfo?.message || `Phiên bản v${updateInfo?.currentVersion || '1.0.1'} hiện là phiên bản cập nhật nhất.`}
                 </p>
               </div>
             )}
