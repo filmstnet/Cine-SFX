@@ -49,8 +49,8 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     title: 'FilmSt - Sfx',
     icon: iconPath || undefined,
-    width: 1140,
-    height: 740,
+    width: 1200,
+    height: 760,
     minWidth: 420,
     minHeight: 480,
     backgroundColor: '#000000',
