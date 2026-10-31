@@ -16,7 +16,7 @@ function MiniRowWaveform({ peaks, isSelected, progress }) {
 
     ctx.clearRect(0, 0, w, h);
 
-    const barCount = 28;
+    const barCount = 24;
     const barWidth = w / barCount;
 
     for (let i = 0; i < barCount; i++) {
@@ -36,7 +36,7 @@ function MiniRowWaveform({ peaks, isSelected, progress }) {
     }
   }, [peaks, isSelected, progress]);
 
-  return <canvas ref={canvasRef} className="w-24 h-5 block" />;
+  return <canvas ref={canvasRef} className="w-20 h-4 block" />;
 }
 
 export default function SoundTable({
@@ -64,16 +64,16 @@ export default function SoundTable({
   return (
     <div className="flex-1 overflow-y-auto p-2">
       <div className="rounded-xl border border-white/10 overflow-hidden bg-[#161617]/40">
-        <table className="w-full text-left text-xs border-collapse">
+        <table className="w-full text-left text-xs border-collapse table-fixed">
           <thead className="bg-[#161617] sticky top-0 z-10 border-b border-white/10 text-[10px] text-[#86868b] uppercase tracking-wider select-none">
             <tr>
-              <th className="py-2 px-3 w-10 text-center">Nghe</th>
-              <th className="py-2 px-3">Tên Sound Effect</th>
-              <th className="py-2 px-3 w-32">Thể loại</th>
-              <th className="py-2 px-3 w-28 text-center">Sóng âm</th>
-              <th className="py-2 px-3 w-20">Thời lượng</th>
-              <th className="py-2 px-3 w-24">Định dạng</th>
-              <th className="py-2 px-3 w-32 text-center">Thao tác</th>
+              <th className="py-2 px-2 w-9 text-center">Nghe</th>
+              <th className="py-2 px-2.5 min-w-[140px]">Tên Sound Effect</th>
+              <th className="py-2 px-2 w-28">Thể loại</th>
+              <th className="py-2 px-2 w-24 text-center">Sóng âm</th>
+              <th className="py-2 px-2 w-16 text-center">Thời lượng</th>
+              <th className="py-2 px-2 w-28 text-center">Định dạng</th>
+              <th className="py-2 px-2 w-28 text-center">Thao tác</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-white/5">
@@ -107,13 +107,13 @@ export default function SoundTable({
                   }`}
                 >
                   {/* Play Button */}
-                  <td className="py-1.5 px-3 text-center">
+                  <td className="py-1.5 px-2 text-center w-9">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         onTogglePlaySound(sound);
                       }}
-                      className={`w-6 h-6 rounded-full flex items-center justify-center transition duration-150 active:scale-90 ${
+                      className={`w-6 h-6 rounded-full flex items-center justify-center transition duration-150 active:scale-90 mx-auto ${
                         isThisPlaying
                           ? 'bg-[#0071e3] text-white shadow-sm'
                           : 'bg-white/10 text-[#86868b] group-hover:text-white group-hover:bg-[#0071e3]'
@@ -128,15 +128,15 @@ export default function SoundTable({
                     </button>
                   </td>
 
-                  {/* Sound Name & Fav */}
-                  <td className="py-1.5 px-3">
-                    <div className="flex items-center gap-2">
+                  {/* Sound Name & Fav (Compacted with min-w-0 and truncate) */}
+                  <td className="py-1.5 px-2.5">
+                    <div className="flex items-center gap-1.5 min-w-0">
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           onToggleFavorite(sound.id);
                         }}
-                        className={`p-0.5 rounded hover:bg-white/10 transition ${
+                        className={`p-0.5 rounded hover:bg-white/10 transition shrink-0 ${
                           isFav ? 'text-amber-400' : 'text-[#424245] opacity-0 group-hover:opacity-100 hover:text-white'
                         }`}
                         title={isFav ? "Bỏ yêu thích" : "Yêu thích"}
@@ -144,7 +144,7 @@ export default function SoundTable({
                         <Star className={`w-3 h-3 ${isFav ? 'fill-amber-400' : ''}`} />
                       </button>
                       <span
-                        className={`truncate max-w-md text-xs font-medium tracking-tight ${
+                        className={`truncate text-xs font-medium tracking-tight block ${
                           isSelected ? 'text-white font-semibold' : 'text-[#f5f5f7]'
                         }`}
                         title={sound.name}
@@ -155,15 +155,15 @@ export default function SoundTable({
                   </td>
 
                   {/* Category Badge */}
-                  <td className="py-1.5 px-3">
-                    <span className="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-[#86868b] border border-white/5 font-medium">
+                  <td className="py-1.5 px-2 w-28">
+                    <span className="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-[#86868b] border border-white/5 font-medium max-w-[105px] truncate">
                       <span>{sound.catIcon || '📁'}</span>
                       <span className="truncate">{sound.catName}</span>
                     </span>
                   </td>
 
                   {/* Mini Inline Waveform */}
-                  <td className="py-1.5 px-3 text-center">
+                  <td className="py-1.5 px-2 w-24 text-center">
                     <div className="flex justify-center">
                       <MiniRowWaveform
                         peaks={sound.peaks}
@@ -174,25 +174,25 @@ export default function SoundTable({
                   </td>
 
                   {/* Duration */}
-                  <td className="py-1.5 px-3 font-mono text-[#86868b] text-[11px]">
+                  <td className="py-1.5 px-2 w-16 text-center font-mono text-[#86868b] text-[11px] whitespace-nowrap">
                     {sound.duration ? sound.duration.toFixed(2) + 's' : '--'}
                   </td>
 
                   {/* Format */}
-                  <td className="py-1.5 px-3 font-mono text-[#86868b] text-[10px]">
+                  <td className="py-1.5 px-2 w-28 text-center font-mono text-[#86868b] text-[10px] whitespace-nowrap">
                     <span className="px-1.5 py-0.5 rounded bg-white/5 border border-white/5">
                       {sound.format}
                     </span>
                   </td>
 
                   {/* Drag Handle, Reveal in Finder & Delete */}
-                  <td className="py-1.5 px-3 text-center">
-                    <div className="inline-flex items-center gap-1">
+                  <td className="py-1.5 px-2 w-28 text-center">
+                    <div className="inline-flex items-center justify-center gap-1">
                       <div
                         draggable="true"
                         onDragStart={handleDragStart}
                         onClick={(e) => e.stopPropagation()}
-                        className="cursor-grab active:cursor-grabbing inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/10 hover:bg-[#0071e3] hover:text-white text-[#f5f5f7] border border-white/10 transition duration-150 text-[10px] font-medium active:scale-95 shadow-sm"
+                        className="cursor-grab active:cursor-grabbing inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 hover:bg-[#0071e3] hover:text-white text-[#f5f5f7] border border-white/10 transition duration-150 text-[10px] font-medium active:scale-95 shadow-sm"
                         title="Kéo thả trực tiếp vào Timeline dựng phim"
                       >
                         <Move className="w-2.5 h-2.5 text-[#0071e3] group-hover:text-white" />

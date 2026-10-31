@@ -81,7 +81,14 @@ export default function Header({
         style={{ WebkitAppRegion: 'drag', paddingLeft: '84px' }}
       >
         {/* Brand & macOS traffic lights spacing */}
-        <div className="flex items-center gap-2.5" style={{ WebkitAppRegion: 'no-drag' }}>
+        <div className="flex items-center gap-2.5 relative" style={{ WebkitAppRegion: 'no-drag' }}>
+          {!window.electronAPI && (
+            <div className="absolute -left-[68px] flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-[#ff5f57] border border-[#e0443e]/50"></div>
+              <div className="w-3 h-3 rounded-full bg-[#febc2e] border border-[#d89e24]/50"></div>
+              <div className="w-3 h-3 rounded-full bg-[#28c840] border border-[#1aab29]/50"></div>
+            </div>
+          )}
           <div className="w-6 h-6 rounded-md overflow-hidden shadow-[0_0_10px_rgba(16,185,129,0.3)] border border-emerald-500/30 flex-shrink-0 bg-[#0d2a1c]">
             <img
               src={appIcon}
