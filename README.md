@@ -2,6 +2,8 @@
 
 Ứng dụng Desktop cao cấp chuẩn Apple dành cho Video Editor và Sound Designer: **Quản lý, nghe thử và kéo thả sound effect (SFX) trực tiếp vào timeline dựng phim**.
 
+![FilmSt - Sfx Desktop Application](screenshot.png)
+
 ---
 
 ### ✨ Tính năng nổi bật
