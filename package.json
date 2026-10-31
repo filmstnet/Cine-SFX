@@ -1,0 +1,63 @@
+{
+  "name": "filmst-sfx",
+  "productName": "FilmSt - Sfx",
+  "version": "1.0.0",
+  "description": "Desktop SFX Library & Instant Drag-and-Drop for Video Editors (FilmSt - Sfx)",
+  "main": "electron/main.cjs",
+  "type": "module",
+  "scripts": {
+    "start": "electron .",
+    "dev": "concurrently -n \"VITE,ELECTRON\" -c \"cyan,magenta\" \"vite\" \"wait-on tcp:3000 && electron . --dev\"",
+    "client": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "electron": "electron .",
+    "pack:mac": "vite build && electron-builder --mac --dir",
+    "dist:mac": "vite build && electron-builder --mac"
+  },
+  "dependencies": {
+    "lucide-react": "^0.475.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.2",
+    "electron": "^45.0.0",
+    "electron-builder": "^26.18.0",
+    "postcss": "^8.5.2",
+    "tailwindcss": "^3.4.17",
+    "vite": "^6.1.0",
+    "wait-on": "^8.0.2"
+  },
+  "build": {
+    "appId": "net.filmst.sfx",
+    "productName": "FilmSt - Sfx",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "demo-sfx/**/*",
+      "package.json"
+    ],
+    "asar": true,
+    "mac": {
+      "icon": "build/icon.icns",
+      "target": [
+        {
+          "target": "default",
+          "arch": [
+            "arm64"
+          ]
+        }
+      ],
+      "category": "public.app-category.video",
+      "darkModeSupport": true,
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false
+    }
+  }
+}
