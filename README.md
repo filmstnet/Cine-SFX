@@ -37,6 +37,12 @@
    - Ghim ứng dụng nổi trên các phần mềm dựng phim.
    - Nút **Mini**: Thu nhỏ thành palette gọn gàng cạnh timeline dựng.
 
+6. **Xóa vĩnh viễn file khỏi ổ cứng (Permanent Deletion with Safety Dialog)**:
+   - Dễ dàng loại bỏ các sound effect không phù hợp, rác hoặc không ưng ý trực tiếp khi đang nghe thử.
+   - Thao tác nhanh qua biểu tượng thùng rác trên từng dòng bảng, trên thanh Player Bar hoặc phím tắt `Delete` / `Backspace`.
+   - **Hộp thoại xác nhận an toàn chuẩn Apple Frosted Glass**: Hiển thị rõ tên file, định dạng, đường dẫn tệp trên ổ đĩa cùng cảnh báo chống xóa nhầm.
+   - Khi xác nhận, file sẽ bị xóa hoàn toàn khỏi ổ đĩa cứng (`unlink`), tự động dừng phát và cập nhật lại danh sách thư viện cũng như cache.
+
 ---
 
 ### 🚀 Khởi chạy ứng dụng (Chế độ phát triển)

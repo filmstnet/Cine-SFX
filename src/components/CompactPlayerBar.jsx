@@ -1,5 +1,5 @@
 import React from 'react';
-import { Play, Pause, Move, Volume2 } from 'lucide-react';
+import { Play, Pause, Move, Volume2, Trash2 } from 'lucide-react';
 
 export default function CompactPlayerBar({
   activeSound,
@@ -7,7 +7,8 @@ export default function CompactPlayerBar({
   currentTime,
   progress,
   onTogglePlay,
-  onSeek
+  onSeek,
+  onRequestDeleteSound
 }) {
   if (!activeSound) return null;
 
@@ -77,8 +78,16 @@ export default function CompactPlayerBar({
         </span>
       </div>
 
-      {/* Right: Big Apple Drag to Timeline Pill Button */}
+      {/* Right: Big Apple Drag to Timeline Pill Button & Delete */}
       <div className="flex items-center gap-2 shrink-0">
+        <button
+          onClick={() => onRequestDeleteSound && onRequestDeleteSound(activeSound)}
+          className="p-1.5 rounded-full bg-[#1d1d1f] hover:bg-red-500/20 border border-white/10 hover:border-red-500/30 text-[#86868b] hover:text-red-400 active:scale-95 transition duration-150"
+          title="Xóa vĩnh viễn sound effect này khỏi ổ cứng"
+        >
+          <Trash2 className="w-3.5 h-3.5" />
+        </button>
+
         <div
           draggable="true"
           onDragStart={handleDragStart}

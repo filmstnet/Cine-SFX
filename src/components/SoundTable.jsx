@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Play, Pause, Move, Star, ExternalLink, Music } from 'lucide-react';
+import { Play, Pause, Move, Star, ExternalLink, Music, Trash2 } from 'lucide-react';
 
 function MiniRowWaveform({ peaks, isSelected, progress }) {
   const canvasRef = useRef(null);
@@ -48,7 +48,8 @@ export default function SoundTable({
   onTogglePlaySound,
   favorites,
   onToggleFavorite,
-  onShowInFinder
+  onShowInFinder,
+  onRequestDeleteSound
 }) {
   if (sounds.length === 0) {
     return (
@@ -72,7 +73,7 @@ export default function SoundTable({
               <th className="py-2 px-3 w-28 text-center">Sóng âm</th>
               <th className="py-2 px-3 w-20">Thời lượng</th>
               <th className="py-2 px-3 w-24">Định dạng</th>
-              <th className="py-2 px-3 w-28 text-center">Kéo thả</th>
+              <th className="py-2 px-3 w-32 text-center">Thao tác</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-white/5">
@@ -184,7 +185,7 @@ export default function SoundTable({
                     </span>
                   </td>
 
-                  {/* Drag Handle & Reveal in Finder */}
+                  {/* Drag Handle, Reveal in Finder & Delete */}
                   <td className="py-1.5 px-3 text-center">
                     <div className="inline-flex items-center gap-1">
                       <div
@@ -204,9 +205,20 @@ export default function SoundTable({
                           onShowInFinder(sound.filePath);
                         }}
                         className="p-1 rounded-full hover:bg-white/10 text-[#86868b] hover:text-white transition"
-                        title="Mở trong Finder"
+                        title="Mở vị trí trong Finder"
                       >
                         <ExternalLink className="w-2.5 h-2.5" />
+                      </button>
+
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onRequestDeleteSound(sound);
+                        }}
+                        className="p-1 rounded-full hover:bg-red-500/20 text-[#86868b] hover:text-red-400 transition"
+                        title="Xóa vĩnh viễn khỏi ổ cứng"
+                      >
+                        <Trash2 className="w-2.5 h-2.5" />
                       </button>
                     </div>
                   </td>

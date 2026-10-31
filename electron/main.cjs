@@ -210,6 +210,30 @@ ipcMain.handle('shell:show-item', (event, filePath) => {
   return false;
 });
 
+// Permanent file deletion from hard disk (unlinks completely)
+ipcMain.handle('file:delete-permanently', async (event, filePath) => {
+  try {
+    if (!filePath) {
+      return { success: false, error: 'Đường dẫn file không hợp lệ.' };
+    }
+    const absPath = path.isAbsolute(filePath) ? filePath : path.resolve(filePath);
+    if (!fs.existsSync(absPath)) {
+      return { success: false, error: 'File không tồn tại trên ổ cứng: ' + absPath };
+    }
+
+    await fs.promises.unlink(absPath);
+    console.log('[Delete] File permanently deleted from disk:', absPath);
+
+    return { success: true, filePath: absPath };
+  } catch (err) {
+    console.error('[Delete] Failed to delete file from disk:', filePath, err);
+    return {
+      success: false,
+      error: err.message || 'Không thể xóa file do hạn chế quyền truy cập hoặc file đang được sử dụng.'
+    };
+  }
+});
+
 // Read audio file buffer directly (fast, zero protocol overhead)
 ipcMain.handle('audio:read-file-buffer', async (event, filePath) => {
   try {

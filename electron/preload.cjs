@@ -7,6 +7,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   saveLibraryCache: (data) => ipcRenderer.invoke('cache:save-library', data),
   startDrag: (filePath) => ipcRenderer.send('drag:start', filePath),
   showInFolder: (filePath) => ipcRenderer.invoke('shell:show-item', filePath),
+  deletePermanently: (filePath) => ipcRenderer.invoke('file:delete-permanently', filePath),
   toggleAlwaysOnTop: () => ipcRenderer.invoke('window:toggle-always-on-top'),
   getAlwaysOnTop: () => ipcRenderer.invoke('window:get-always-on-top'),
   setMiniMode: (enable) => ipcRenderer.invoke('window:set-mini-mode', enable),
