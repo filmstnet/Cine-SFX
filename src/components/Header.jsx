@@ -97,7 +97,7 @@ export default function Header({
               <div className="w-3 h-3 rounded-full bg-[#28c840] border border-[#1aab29]/50"></div>
             </div>
           )}
-          <div className="w-6 h-6 rounded-md overflow-hidden shadow-[0_0_10px_rgba(16,185,129,0.3)] border border-emerald-500/30 flex-shrink-0 bg-[#0d2a1c]">
+          <div className="w-6 h-6 rounded-md overflow-hidden shadow-[0_0_10px_rgba(168,85,247,0.35)] border border-purple-500/30 flex-shrink-0 bg-[#240d33]">
             <img
               src={appIcon}
               alt="FilmSt - Sfx"
@@ -106,7 +106,7 @@ export default function Header({
           </div>
           <div className="flex items-center gap-1.5">
             <span className="font-semibold text-xs tracking-tight text-[#f5f5f7]">FilmSt - Sfx</span>
-            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 font-semibold tracking-wider">
+            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-purple-500/15 text-purple-300 border border-purple-500/25 font-semibold tracking-wider">
               PRO
             </span>
           </div>
@@ -115,10 +115,10 @@ export default function Header({
           {updateInfo?.hasUpdate && (
             <button
               onClick={() => setShowUpdateModal(true)}
-              className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 text-[10px] font-medium shadow-[0_0_10px_rgba(16,185,129,0.3)] animate-pulse hover:scale-105 transition"
+              className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-200 border border-purple-400/40 text-[10px] font-medium shadow-[0_0_10px_rgba(168,85,247,0.35)] animate-pulse hover:scale-105 transition"
               title="Có bản cập nhật mới! Bấm để tải"
             >
-              <ArrowUpCircle className="w-3 h-3 text-emerald-400" />
+              <ArrowUpCircle className="w-3 h-3 text-purple-400" />
               <span>v{updateInfo.latestVersion} mới</span>
             </button>
           )}
@@ -237,7 +237,7 @@ export default function Header({
           >
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg overflow-hidden border border-emerald-500/30 bg-[#0d2a1c] flex items-center justify-center">
+                <div className="w-7 h-7 rounded-lg overflow-hidden border border-purple-500/30 bg-[#240d33] flex items-center justify-center">
                   <img src={appIcon} alt="FilmSt" className="w-full h-full object-cover" />
                 </div>
                 <div>
