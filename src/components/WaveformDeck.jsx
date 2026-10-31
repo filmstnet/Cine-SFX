@@ -121,15 +121,15 @@ export default function WaveformDeck({
           </div>
         </div>
 
-        {/* Big Drag Button (Apple Pill Button) */}
+        {/* Drag to Timeline Button */}
         <div
           draggable="true"
           onDragStart={handleDragStart}
-          className="cursor-grab active:cursor-grabbing flex items-center gap-2 bg-[#0071e3] hover:bg-[#0077ed] text-white px-4 py-2 rounded-full font-medium text-xs tracking-tight shadow-[0_4px_16px_rgba(0,113,227,0.35)] active:scale-[0.97] transition duration-200 shrink-0"
+          className="cursor-grab active:cursor-grabbing flex items-center gap-1 bg-[#0071e3] hover:bg-[#0077ed] text-white px-2.5 py-1 rounded-full text-[10px] font-medium tracking-tight shadow-sm active:scale-95 transition duration-150 shrink-0"
           title="Bấm giữ và kéo thả thẳng vào Timeline của DaVinci Resolve hoặc Premiere Pro"
         >
-          <Move className="w-3.5 h-3.5" />
-          <span className="font-semibold text-[11px] tracking-wide">KÉO VÀO TIMELINE</span>
+          <Move className="w-2.5 h-2.5" />
+          <span>Kéo vào timeline</span>
         </div>
       </div>
 
